@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import posthog from "posthog-js";
 import Link from "next/link";
@@ -14,6 +15,11 @@ import {
   GitPullRequestClosed,
 } from "lucide-react";
 import { TechnicalArsenalAndEducation } from "@/components/technical-arsenal-and-education";
+
+const FooterQuote = dynamic(
+  () => import("@/components/footer-quote").then((mod) => mod.FooterQuote),
+  { ssr: false }
+);
 
 export default function Portfolio() {
   return (
@@ -388,86 +394,43 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* TICKET 3 & 4 Grid: Gemini & Rocket.Chat */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {/* Gemini CLI */}
-              <div className="group relative flex flex-col gap-3 border border-[#222] bg-[#0a0a0a] rounded-lg p-5 transition-all hover:border-[#444] hover:bg-[#0f0f0f]">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-2 text-muted-foreground font-mono text-xs sm:text-sm">
-                    <GitPullRequest className="w-4 h-4 text-[#3fb950]" />{" "}
-                    {/* GitHub Open Green */}
-                    <span>google-gemini/gemini-cli</span>
-                  </div>
+            {/* TICKET 3: Rocket.Chat */}
+            <div className="group relative flex flex-col gap-3 border border-[#222] bg-[#0a0a0a] rounded-lg p-5 transition-all hover:border-[#444] hover:bg-[#0f0f0f]">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-2 text-muted-foreground font-mono text-xs sm:text-sm">
+                  <GitPullRequest className="w-4 h-4 text-[#238636]" />{" "}
+                  {/* GitHub Green */}
+                  <span>RocketChat/Rocket.Chat</span>
                 </div>
-                <div>
-                  <a
-                    href="https://github.com/google-gemini/gemini-cli/pull/21426"
-                    target="_blank"
-                    className="text-foreground font-semibold font-sans text-md hover:underline decoration-[#333] underline-offset-4"
-                  >
-                    Automated Update Command ↗
-                  </a>
-                  <p className="text-muted-foreground font-sans text-sm mt-2 leading-relaxed">
-                    Implemented an update subcommand with automatic package
-                    manager detection (npm, brew, yarn) and secure,
-                    platform-aware error handling.{" "}
-                    <span className="italic opacity-80 text-[#3fb950]/80">
-                      (Reopened and under active maintainer review)
-                    </span>
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-1">
-                  <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
-                    CLI
-                  </span>
-                  <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
-                    TypeScript
-                  </span>
-                  <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
-                    Node.js
-                  </span>
+                <div className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-[#238636]/10 text-[#238636] border border-[#238636]/20">
+                  Open
                 </div>
               </div>
+              <div>
+                <a
+                  href="https://github.com/RocketChat/Rocket.Chat/pull/38578"
+                  target="_blank"
+                  className="text-foreground font-semibold font-sans text-md hover:underline decoration-[#333] underline-offset-4"
+                >
+                  Strict Token Compliance ↗
+                </a>
+                <p className="text-muted-foreground font-sans text-sm mt-2 leading-relaxed">
+                  Resolved a UI rendering bug and console error by enforcing
+                  strict design token compliance within the enterprise Fuselage
+                  component library, eliminating invalid state warnings
+                </p>
+              </div>
 
-              {/* Rocket.Chat */}
-              <div className="group relative flex flex-col gap-3 border border-[#222] bg-[#0a0a0a] rounded-lg p-5 transition-all hover:border-[#444] hover:bg-[#0f0f0f]">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-2 text-muted-foreground font-mono text-xs sm:text-sm">
-                    <GitPullRequest className="w-4 h-4 text-[#238636]" />{" "}
-                    {/* GitHub Green */}
-                    <span>RocketChat/Rocket.Chat</span>
-                  </div>
-                  <div className="px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider bg-[#238636]/10 text-[#238636] border border-[#238636]/20">
-                    Open
-                  </div>
-                </div>
-                <div>
-                  <a
-                    href="https://github.com/RocketChat/Rocket.Chat/pull/38578"
-                    target="_blank"
-                    className="text-foreground font-semibold font-sans text-md hover:underline decoration-[#333] underline-offset-4"
-                  >
-                    Strict Token Compliance ↗
-                  </a>
-                  <p className="text-muted-foreground font-sans text-sm mt-2 leading-relaxed">
-                    Resolved a UI rendering bug and console error by enforcing
-                    strict design token compliance within the enterprise
-                    Fuselage component library, eliminating invalid state
-                    warnings
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mt-1">
-                  <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
-                    React
-                  </span>
-                  <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
-                    TypeScript
-                  </span>
-                  <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
-                    Design Systems
-                  </span>
-                </div>
+              <div className="flex flex-wrap gap-2 mt-1">
+                <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
+                  React
+                </span>
+                <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
+                  TypeScript
+                </span>
+                <span className="px-2 py-1 rounded-md bg-[#111] border border-[#333] text-xs text-muted-foreground font-mono">
+                  Design Systems
+                </span>
               </div>
             </div>
           </div>
@@ -683,8 +646,11 @@ export default function Portfolio() {
         {/* DEVELOPER ENVIRONMENT */}
         <DeveloperEnvironment />
 
+        {/* Engineering Quote */}
+        <FooterQuote />
+
         {/* FOOTER & EASTER EGG HINT */}
-        <footer className="mt-16 pb-28 sm:pb-12 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-muted-foreground border-t border-[#222] pt-8 animate-in fade-in duration-700 ease-in-out delay-700 fill-mode-both">
+        <footer className="mt-4 pb-28 sm:pb-12 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-muted-foreground border-t border-[#222] pt-8 animate-in fade-in duration-700 ease-in-out delay-700 fill-mode-both">
           <p>© {new Date().getFullYear()} Abir Roy. All systems operational.</p>
 
           <div className="hidden sm:flex items-center gap-2 font-mono text-xs">
