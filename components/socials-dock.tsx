@@ -1,8 +1,10 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { useState } from "react";
+import { Mail, QrCode, X } from "lucide-react";
 import Link from "next/link";
 import posthog from "posthog-js";
+import QRCode from "react-qr-code";
 
 const socials = [
   {
@@ -50,29 +52,93 @@ const socials = [
 ];
 
 export function SocialsDock() {
+  const [isQrOpen, setIsQrOpen] = useState(false);
+
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
-      <nav className="flex items-center gap-1 p-2 rounded-full border border-[#222] bg-background/80 backdrop-blur-md shadow-2xl">
-        {socials.map((social) => (
-          <Link
-            key={social.name}
-            href={social.href}
-            target="_blank"
-            className="group relative p-2.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-[#111] transition-all duration-200"
-            onClick={social.clickHandler}
+    <>
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
+        <nav className="flex items-center gap-1 p-2 rounded-full border border-[#222] bg-background/80 backdrop-blur-md shadow-2xl">
+          {socials.map((social) => (
+            <Link
+              key={social.name}
+              href={social.href}
+              target="_blank"
+              className="group relative p-2.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-[#111] transition-all duration-200"
+              onClick={social.clickHandler}
+            >
+              {social.icon}
+
+              {/* Custom Minimalist Tooltip */}
+              <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black border border-[#222] text-[10px] text-foreground opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                {social.name}
+              </span>
+
+              <span className="sr-only">{social.name}</span>
+            </Link>
+          ))}
+          {/* VISUAL SEPARATOR */}
+          <div className="w-[1px] h-6 bg-[#333] mx-1" />
+
+          {/* QR BUTTON */}
+          <button
+            onClick={() => {
+              setIsQrOpen(true);
+              posthog.capture("qr_code_opened", { location: "dock" });
+            }}
+            className="group relative p-2.5 rounded-full text-muted-foreground hover:text-foreground hover:bg-[#111] transition-all duration-200 focus:outline-none"
           >
-            {social.icon}
-
-            {/* Custom Minimalist Tooltip */}
+            <QrCode className="w-5 h-5" />
             <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-black border border-[#222] text-[10px] text-foreground opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-              {social.name}
+              Share QR
             </span>
+          </button>
+        </nav>
+      </div>
+      {/* THE MODAL OVERLAY */}
+      {isQrOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+          onClick={() => setIsQrOpen(false)} // Clicking the background closes it
+        >
+          <div
+            className="relative bg-[#050505] border border-[#222] p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-6 animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()} // Prevent clicks inside the modal from closing it
+          >
+            {/* CLOSE BUTTON */}
+            <button
+              onClick={() => setIsQrOpen(false)}
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
 
-            <span className="sr-only">{social.name}</span>
-          </Link>
-        ))}
-      </nav>
-    </div>
+            <div className="text-center space-y-1">
+              <h2 className="text-xl font-bold font-mono text-foreground tracking-tight">
+                roy-abir05.vercel.app
+              </h2>
+              <p className="text-xs text-muted-foreground font-mono">
+                Systems & Full-Stack Engineer
+              </p>
+            </div>
+
+            {/* THE QR CODE */}
+            <div className="bg-white p-3 rounded-xl shadow-inner">
+              <QRCode
+                value="https://roy-abir05.vercel.app/"
+                size={200}
+                level="H" // High error correction
+                bgColor="#ffffff"
+                fgColor="#000000"
+              />
+            </div>
+
+            <p className="text-[10px] text-muted-foreground font-mono uppercase tracking-widest opacity-50">
+              Scan to Connect
+            </p>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
