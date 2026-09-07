@@ -114,7 +114,7 @@ export function SocialsDock() {
 
             <div className="text-center space-y-1">
               <h2 className="text-xl font-bold font-mono text-foreground tracking-tight">
-                roy-abir05.vercel.app
+                roy-abir05.dev
               </h2>
               <p className="text-xs text-muted-foreground font-mono">
                 Systems & Full-Stack Engineer
@@ -124,7 +124,7 @@ export function SocialsDock() {
             {/* THE QR CODE */}
             <div className="bg-white p-3 rounded-xl shadow-inner">
               <QRCode
-                value="https://roy-abir05.vercel.app/"
+                value="https://www.roy-abir05.dev/"
                 size={200}
                 level="H" // High error correction
                 bgColor="#ffffff"
