@@ -18,7 +18,7 @@ import { TechnicalArsenalAndEducation } from "@/components/technical-arsenal-and
 
 const FooterQuote = dynamic(
   () => import("@/components/footer-quote").then((mod) => mod.FooterQuote),
-  { ssr: false }
+  { ssr: false },
 );
 
 export default function Portfolio() {
@@ -79,7 +79,7 @@ export default function Portfolio() {
                 GitHub
               </Button>
             </Link>
-            <a href="/Abir Roy.pdf" download="Abir Roy.pdf">
+            <a href="/Abir_Roy.pdf" download="Abir_Roy.pdf">
               <Button
                 variant="secondary"
                 className="h-10 px-6 font-medium"
